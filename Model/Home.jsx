@@ -5,6 +5,7 @@ import bell from "../assets/bell.png";
 import send from "../assets/send.png";
 import rec from "../assets/rec.png";
 import menuicon from "../assets/menu.png";
+import food from "../assets/burger.png";
 
 
 
@@ -29,7 +30,34 @@ const Home = () => {
       <View style={{alignItems:'center',gap:5}}>
         <Image style={styles.SenderImg} source={userimg} />
         <Text style={styles.SenderName}>{props.senderName}</Text>
+
       </View>
+    );
+  };
+  const Transaction = (props)=> {
+    return (
+        <View style={{width:'100%'}}>
+      <View style={{alignItems:'center',width:'100%',gap:5,flexDirection:'row',justifyContent:'space-between'}}>
+       
+        <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
+            <View style={styles.TransactionIconContainer}>
+        <Image style={styles.TransactionIcon} source={food} />
+        </View>
+
+        <View>
+        <Text style={styles.TransactionTitle}>{props.TransactionTitle}</Text>
+        <View style={{flexDirection:'row', gap:5}}>
+        <Text style={styles.TransactionDate}>{props.TransactionDate}</Text>
+        <Text style={styles.TransactionTime}>• {props.TransactionTime}</Text>
+
+        </View>
+        
+        </View>
+        </View>
+        <Text style={styles.TransactionAmount}>{props.TransactionAmount}</Text>
+      </View>
+      <View style={styles.TransactionLine}></View>
+        </View>
     );
   };
 
@@ -90,6 +118,26 @@ const Home = () => {
         See all
       </Text>
       </View>
+      <View style={styles.TransactionCol}>
+      <Transaction TransactionTitle ="Food Store" 
+      TransactionDate='Mon,25 January'
+      TransactionTime='4:40 PM'
+      TransactionAmount="$20.20"/>
+       <Transaction TransactionTitle ="Food Store" 
+      TransactionDate='Mon,25 January'
+      TransactionTime='4:40 PM'
+      TransactionAmount="$20.20"/> 
+      <Transaction TransactionTitle ="Food Store" 
+      TransactionDate='Mon,25 January'
+      TransactionTime='4:40 PM'
+      TransactionAmount="$20.20"/> 
+      <Transaction TransactionTitle ="Food Store" 
+      TransactionDate='Mon,25 January'
+      TransactionTime='4:40 PM'
+      TransactionAmount="$20.20"/>
+      
+      </View>
+
       </View>
 
 <View >
@@ -256,10 +304,53 @@ const styles = StyleSheet.create({
       RecentTransactionTitle:{
         fontSize:15,
         fontWeight:600,
-        color:'#707070'
+        color:'#707070',
       },
       SeeAll:{
         fontSize:13,
         color:'#707070'
-      }
+      },
+      TransactionCol:{
+        alignItems:'flex-start',
+        paddingTop:30,
+        gap:10,
+
+      },
+      TransactionTitle:{
+        fontSize:16,
+        fontWeight:600
+      },
+        TransactionDate:{
+            fontSize:11,
+            color:'#707070'
+
+        },
+        TransactionTime:{
+            fontSize:11,
+            color:'#707070'
+
+        },
+        TransactionAmount:{
+            fontSize:18,
+            fontWeight:600
+        },
+        TransactionLine:{
+            width:'100%',
+            backgroundColor:'#707070',
+            height:1,
+            marginTop:10,
+            opacity:0.3
+        },
+        TransactionIconContainer:{
+            width:40,
+            height:40,
+            backgroundColor:'#D0D1CF',
+      borderRadius:40,
+            justifyContent:'center',
+            alignItems:'center'
+        },
+        TransactionIcon:{
+            width:25,
+            height:25,
+        }
     });
