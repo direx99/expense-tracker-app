@@ -17,7 +17,9 @@ export default function App() {
   return (
     <View style={styles.container}>
     <NavigationContainer>
+      <View style={{  flex:1}}>
      <Stack.Navigator screenOptions={{ animation: 'none' }}> 
+     
         {/*Define our routes*/}
         <Stack.Screen name="Home" component={Home}  options={{headerShown: false}} />
         <Stack.Screen name="Statistic" component={Statistic}  options={{headerShown: false}}/>
@@ -26,7 +28,11 @@ export default function App() {
         <Stack.Screen name="Settings" component={Settings}  options={{headerShown: false}}/>
 
       </Stack.Navigator>
-      <BottomNav/>
+      <View style={styles.btmnav}>
+      <BottomNav />
+      </View>
+      </View>
+
     </NavigationContainer>
     </View>
   );
@@ -36,7 +42,14 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     backgroundColor:'#111111',
-    padding:10
+    padding:20,
+
+  },
+  btmnav:{
+    position:'absolute',
+    bottom:-10,
+    left:10,
+    right:10
   }
 
 })
