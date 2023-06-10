@@ -2,6 +2,8 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import bell from "../assets/bell.png";
 import apple from "../assets/apple.png";
+import pizza from "../assets/pizzaa.png";
+import keells from "../assets/keells.png";
 
 const BottomBar = (props) => {
   return (
@@ -22,6 +24,7 @@ const BillsDue = (props) => {
           flexDirection: "row",
           justifyContent: "space-between",
           marginBottom: 20,
+
         }}
       >
         <Text style={styles.BillsDueTitle}>Bills due</Text>
@@ -36,18 +39,18 @@ const BillsDue = (props) => {
             gap: 10,
           }}
         >
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
-          <Bill />
+          <Bill BillImage={keells} PayerName={'Keells'} PayerType={'Shoping'}/>
+          <Bill BillImage={pizza} PayerName={'Pizza Hut'} PayerType={'Food'}/>
+          <Bill BillImage={apple} PayerName={'Apple'} PayerType={'Shopping'}/>
+          <Bill BillImage={keells} PayerName={'Keells'} PayerType={'Shoping'}/>
+          <Bill BillImage={pizza} PayerName={'Pizza'} PayerType={'Food'}/>
+          <Bill BillImage={apple} PayerName={'Apple'} PayerType={'Shopping'}/>
+          <Bill BillImage={keells} PayerName={'Keells'} PayerType={'Shoping'}/>
+          <Bill BillImage={pizza} PayerName={'Pizza'} PayerType={'Food'}/>
+          <Bill BillImage={apple} PayerName={'Apple'} PayerType={'Shopping'}/><Bill BillImage={keells} PayerName={'Keells'} PayerType={'Shoping'}/>
+          <Bill BillImage={pizza} PayerName={'Pizza'} PayerType={'Food'}/>
+          <Bill BillImage={apple} PayerName={'Apple'} PayerType={'Shopping'}/>
+
         </View>
       </ScrollView>
     </View>
@@ -59,10 +62,10 @@ const Bill = (props) => {
       <View style={{ flexDirection: "row", alignItems: "center",justifyContent:'space-between'}}>
       <View style={{flexDirection:'row', gap: 10 ,}}>
 
-        <Image style={styles.apple} source={apple}></Image>
+        <Image style={[styles.apple,{borderRadius:10}]} source={props.BillImage}></Image>
         <View style={{ gap: 2 }}>
-          <Text style={styles.PayerName}>Apple Inc</Text>
-          <Text style={styles.PayerType}>Shopping</Text>
+          <Text style={styles.PayerName}>{props.PayerName}</Text>
+          <Text style={styles.PayerType}>{props.PayerType}</Text>
         </View>
         </View>
         <View style={{flexDirection:'row',alignItems:'flex-end'}}>
@@ -162,23 +165,23 @@ const GraphCard = () => {
             MonthName={"Apr"}
           />
           <GraphLine
-            earnLineHeight={100}
-            spendLineHeight={50}
+            earnLineHeight={55}
+            spendLineHeight={34}
             MonthName={"May"}
           />
           <GraphLine
-            earnLineHeight={100}
-            spendLineHeight={50}
+            earnLineHeight={90}
+            spendLineHeight={76}
             MonthName={"Jun"}
           />
           <GraphLine
-            earnLineHeight={100}
-            spendLineHeight={50}
+            earnLineHeight={130}
+            spendLineHeight={80}
             MonthName={"Jul"}
           />
           <GraphLine
-            earnLineHeight={100}
-            spendLineHeight={50}
+            earnLineHeight={120}
+            spendLineHeight={67}
             MonthName={"Aug"}
           />
           <GraphLine
@@ -187,8 +190,8 @@ const GraphCard = () => {
             MonthName={"Sep"}
           />
           <GraphLine
-            earnLineHeight={100}
-            spendLineHeight={50}
+            earnLineHeight={140}
+            spendLineHeight={90}
             MonthName={"Oct"}
           />
           <GraphLine

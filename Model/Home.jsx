@@ -6,6 +6,16 @@ import send from "../assets/send.png";
 import rec from "../assets/rec.png";
 import menuicon from "../assets/menu.png";
 import food from "../assets/burger.png";
+import a1 from "../assets/avatar/a1.png";
+import a2 from "../assets/avatar/a2.png";
+import a3 from "../assets/avatar/a3.png";
+import a4 from "../assets/avatar/a4.png";
+import a5 from "../assets/avatar/a5.png";
+import grocery from "../assets/transactions/grocery.png"
+import phone from "../assets/transactions/phone.png"
+import fashion from "../assets/transactions/fashion.png"
+import pizza from "../assets/transactions/pizza.png"
+
 
 
 
@@ -28,7 +38,7 @@ const Home = () => {
   const Sender = (props)=> {
     return (
       <View style={{alignItems:'center',gap:5}}>
-        <Image style={styles.SenderImg} source={userimg} />
+        <Image style={styles.SenderImg} source={props.senderImage} />
         <Text style={styles.SenderName}>{props.senderName}</Text>
 
       </View>
@@ -41,7 +51,7 @@ const Home = () => {
        
         <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
             <View style={styles.TransactionIconContainer}>
-        <Image style={styles.TransactionIcon} source={food} />
+        <Image style={styles.TransactionIcon} source={props.TransactionIcon} />
         </View>
 
         <View>
@@ -54,7 +64,11 @@ const Home = () => {
         
         </View>
         </View>
+        <View style={{flexDirection:'row'}}>
+          <Text style={[styles.TransactionAmount,{color:'#F26F2E'}]}>$</Text>
         <Text style={styles.TransactionAmount}>{props.TransactionAmount}</Text>
+
+        </View>
       </View>
       <View style={styles.TransactionLine}></View>
         </View>
@@ -97,11 +111,11 @@ const Home = () => {
             Quick Send
         </Text>
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-        <Sender senderName ="Dinith"/>
-        <Sender senderName ="Salman"/>
-        <Sender senderName ="Amashi"/>
-        <Sender senderName ="Imesh"/>
-        <Sender senderName ="Ahnaf"/>
+        <Sender senderName ="Dinith" senderImage={a1}/>
+        <Sender senderName ="Salman"  senderImage={a2}/>
+        <Sender senderName ="Amashi" senderImage={a3}/>
+        <Sender senderName ="Imesh" senderImage={a4}/>
+        <Sender senderName ="Ahnaf"senderImage={a5}/>
 
        
         
@@ -119,22 +133,26 @@ const Home = () => {
       </Text>
       </View>
       <View style={styles.TransactionCol}>
-      <Transaction TransactionTitle ="Food Store" 
-      TransactionDate='Mon,25 January'
+      <Transaction TransactionTitle ="Keells Super" 
+      TransactionDate='Tue,25 May'
       TransactionTime='4:40 PM'
-      TransactionAmount="$20.20"/>
-       <Transaction TransactionTitle ="Food Store" 
-      TransactionDate='Mon,25 January'
-      TransactionTime='4:40 PM'
-      TransactionAmount="$20.20"/> 
-      <Transaction TransactionTitle ="Food Store" 
-      TransactionDate='Mon,25 January'
-      TransactionTime='4:40 PM'
-      TransactionAmount="$20.20"/> 
-      <Transaction TransactionTitle ="Food Store" 
-      TransactionDate='Mon,25 January'
-      TransactionTime='4:40 PM'
-      TransactionAmount="$20.20"/>
+      TransactionIcon={grocery}
+      TransactionAmount="120.20"/>
+       <Transaction TransactionTitle ="The Mobiway" 
+      TransactionDate='Mon,18 May'
+      TransactionTime='12:10 PM'
+      TransactionIcon={phone}
+      TransactionAmount="76.20"/> 
+      <Transaction TransactionTitle ="ODEL" 
+      TransactionDate='Wed,12 May'
+      TransactionTime='2:49 AM'
+      TransactionIcon={fashion}
+      TransactionAmount="180.90"/> 
+      <Transaction TransactionTitle ="Pizza Hut" 
+      TransactionDate='Sun,5 January'
+      TransactionIcon={pizza}
+      TransactionTime='1:19 AM'
+      TransactionAmount="13.00"/>
       
       </View>
 
@@ -339,7 +357,7 @@ const styles = StyleSheet.create({
             backgroundColor:'#707070',
             height:1,
             marginTop:10,
-            opacity:0.3
+            opacity:0.1
         },
         TransactionIconContainer:{
             width:40,
