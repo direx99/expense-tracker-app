@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import userimg from "../assets/user.jpg";
 import bell from "../assets/bell.png";
@@ -15,6 +15,8 @@ import grocery from "../assets/transactions/grocery.png"
 import phone from "../assets/transactions/phone.png"
 import fashion from "../assets/transactions/fashion.png"
 import pizza from "../assets/transactions/pizza.png"
+import { useNavigation } from "@react-navigation/native";
+import BottomNav from "./BottomNav";
 
 
 
@@ -36,11 +38,16 @@ const Home = () => {
     );
   };
   const Sender = (props)=> {
+    const navigation = useNavigation();
+
     return (
       <View style={{alignItems:'center',gap:5}}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Send')}>
         <Image style={styles.SenderImg} source={props.senderImage} />
-        <Text style={styles.SenderName}>{props.senderName}</Text>
+              
 
+        <Text style={styles.SenderName}>{props.senderName}</Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -77,6 +84,8 @@ const Home = () => {
 
   return (
     <View style={styles.home}>
+                
+
       <View style={styles.TopBar}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image style={styles.UserImg} source={userimg} />

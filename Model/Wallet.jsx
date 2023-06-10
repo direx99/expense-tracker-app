@@ -236,5 +236,11 @@ const styles = StyleSheet.create({
     height:60,
     width:60,
     marginBottom:-10
+  },
+  btmnav: {
+    position: 'absolute',
+    bottom: -10,
+    left: 10,
+    right: 10
   }
 });

@@ -9,9 +9,11 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const BottomNav = () => {
+const BottomNav = ({hideView}) => {
     const navigation = useNavigation();
-
+    const handleClick = () => {
+      hideView();
+    };
   const [selectedIcon, setSelectedIcon] = useState('home');
 
   const handleIconPress = (iconName) => {

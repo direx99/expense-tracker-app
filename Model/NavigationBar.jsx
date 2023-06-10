@@ -12,14 +12,8 @@ const NavigationBar = () => {
     tabBarOptions={{
       showLabel: false,
       style:{
-        position:'absolute',
-        bottom:25,
         backgroundColor:'#000',
-        left:20,
-        right:20,
-        height:100,
-
-
+        position:ab
         
       }
     }}
