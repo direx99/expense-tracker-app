@@ -1,8 +1,37 @@
-> Why do I have a folder named ".expo" in my project?
-The ".expo" folder is created when an Expo project is started using "expo start" command.
-> What do the files contain?
-- "devices.json": contains information about devices that have recently opened this project. This is used to populate the "Development sessions" list in your development builds.
-- "settings.json": contains the server configuration that is used to serve the application manifest.
-> Should I commit the ".expo" folder?
-No, you should not share the ".expo" folder. It does not contain any information that is relevant for other developers working on the project, it is specific to your machine.
-Upon project creation, the ".expo" folder is already added to your ".gitignore" file.
+
+# Expense Tracker App
+
+Ihave created an Expense Tracker App using React Native. As a self-studying developer, I have been working on various small apps using React Native, and this project allowed me to further enhance my skills. In this report, I will provide an overview of the project, the technologies used, and my experience during the development process.
+
+The Expense Tracker App is a mobile application developed using React Native, a popular JavaScript framework for building native mobile apps. The main goal of this app is to help users track their expenses and manage their financial activities in a convenient and user-friendly manner. By providing an intuitive user interface and essential functionalities, the app allows users to record their expenses, categorize them, and generate reports for better financial management.
+
+
+
+
+
+
+
+
+## Screenshots
+
+
+![alt text](https://i.postimg.cc/nL2ywQMk/Screenshot-2023-06-11-at-14-21-22.png)
+
+
+![alt text](https://i.postimg.cc/L8tKLWpG/Screenshot-2023-06-11-at-14-21-28.png)
+
+
+![alt text](https://i.postimg.cc/wvfd3spv/Screenshot-2023-06-11-at-14-21-34.png)
+
+
+![alt text](https://i.postimg.cc/Mp2JcShy/Screenshot-2023-06-11-at-14-21-43.png)
+
+
+![alt text](https://i.postimg.cc/fbM4KvWy/Screenshot-2023-06-11-at-14-22-05.png)
+## Tech Stack
+
+ React Native
+
+
+## UI Credit
+ https://dribbble.com/shots/21012436-Finance-Mobile-App
