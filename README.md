@@ -1,7 +1,7 @@
 
 # Expense Tracker App
 
-Ihave created an Expense Tracker App using React Native. As a self-studying developer, I have been working on various small apps using React Native, and this project allowed me to further enhance my skills. In this report, I will provide an overview of the project, the technologies used, and my experience during the development process.
+I have created an Expense Tracker App using React Native. As a self-studying developer, I have been working on various small apps using React Native, and this project allowed me to further enhance my skills. In this report, I will provide an overview of the project, the technologies used, and my experience during the development process.
 
 The Expense Tracker App is a mobile application developed using React Native, a popular JavaScript framework for building native mobile apps. The main goal of this app is to help users track their expenses and manage their financial activities in a convenient and user-friendly manner. By providing an intuitive user interface and essential functionalities, the app allows users to record their expenses, categorize them, and generate reports for better financial management.
 
