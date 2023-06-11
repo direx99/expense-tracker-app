@@ -280,7 +280,7 @@ const Statistic = () => {
           <Image style={styles.BellImg} source={more} />
         </View>
       </View>
-      <ScrollView style={{marginTop:10,borderRadius:20,marginBottom:-100}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{marginTop:10,borderRadius:20,marginBottom:-100}}>
       <GraphCard />
       <BillsDue />
       </ScrollView>

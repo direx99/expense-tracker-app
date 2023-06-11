@@ -16,6 +16,7 @@ import More from "./Model/More";
 import Wallet from "./Model/Wallet";
 import Settings from "./Model/Settings";
 import SendMoney from "./Model/SendMoney";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -57,6 +58,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+            <StatusBar style="light" />
+
       <NavigationContainer>
         <View style={{ flex: 1 }}>
           <Stack.Navigator screenOptions={{ animation: "none" }}>

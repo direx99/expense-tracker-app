@@ -41,8 +41,8 @@ const Home = () => {
     const navigation = useNavigation();
 
     return (
-      <View style={{alignItems:'center',gap:5}}>
-        <TouchableOpacity onPress={()=>navigation.navigate('Send')}>
+      <View style={{alignItems:'center',gap:10}}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Send')} style={{alignItems:'center',gap:5}}>
         <Image style={styles.SenderImg} source={props.senderImage} />
               
 
