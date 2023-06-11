@@ -4,6 +4,8 @@ import bell from "../assets/bell.png";
 import apple from "../assets/apple.png";
 import pizza from "../assets/pizzaa.png";
 import keells from "../assets/keells.png";
+import more from "../assets/Navigation/more.png";
+
 
 const BottomBar = (props) => {
   return (
@@ -275,11 +277,13 @@ const Statistic = () => {
 
         <Text style={styles.Analytics}>Analytics</Text>
         <View style={styles.BellContiner}>
-          <Image style={styles.BellImg} source={bell} />
+          <Image style={styles.BellImg} source={more} />
         </View>
       </View>
+      <ScrollView style={{marginTop:10,borderRadius:20,marginBottom:-100}}>
       <GraphCard />
       <BillsDue />
+      </ScrollView>
       <BottomBar />
     </View>
   );
@@ -309,7 +313,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   TopBar: {
-    paddingTop: 40,
+    paddingTop: 50,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -383,6 +387,7 @@ const styles = StyleSheet.create({
   },
   BillsDue: {
     flexGrow: 1,
+    height:'100%',
     width: "100%",
     backgroundColor: "#fff",
     borderRadius: 20,
