@@ -8,18 +8,23 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import more from "../assets/Navigation/more.png";
 import back from "../assets/Navigation/back.png";
 import next from "../assets/Navigation/next.png";
 import del from "../assets/Navigation/del.png";
 import user from "../assets/avatar/a1.png";
+import type { RootStackParamList } from "../types/navigation";
 
 
 
 
-const SendDetails = ({number}) =>{
-  const { width, height } = Dimensions.get('window');
-  const cssWidth = `${width}px`;
+type SendDetailsProps = { number: string };
+type NumberPadProps = { handleDeletePress: () => void; handleNumberPress: (digit: string) => void };
+type Props = NativeStackScreenProps<RootStackParamList, "Send">;
+
+const SendDetails = ({number}: SendDetailsProps) =>{
+  const { height } = Dimensions.get('window');
   const cssHeight = height-200;
   return(
     <View style={[styles.SendDetails,{height:cssHeight }]}>
@@ -46,7 +51,7 @@ const SendDetails = ({number}) =>{
   )
 }
 
-const CustomNumberPad = ({handleNumberPress,handleDeletePress}) => { 
+const CustomNumberPad = ({handleNumberPress,handleDeletePress}: NumberPadProps) => {
 
   
 
@@ -70,19 +75,19 @@ const CustomNumberPad = ({handleNumberPress,handleDeletePress}) => {
         >
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(1)}
+            onPress={() => handleNumberPress("1")}
           >
             <Text style={styles.NumText}>1</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(2)}
+            onPress={() => handleNumberPress("2")}
           >
             <Text style={styles.NumText}>2</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(3)}
+            onPress={() => handleNumberPress("3")}
           >
             <Text style={styles.NumText}>3</Text>
           </TouchableOpacity>
@@ -96,19 +101,19 @@ const CustomNumberPad = ({handleNumberPress,handleDeletePress}) => {
         >
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(4)}
+            onPress={() => handleNumberPress("4")}
           >
             <Text style={styles.NumText}>4</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(5)}
+            onPress={() => handleNumberPress("5")}
           >
             <Text style={styles.NumText}>5</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(6)}
+            onPress={() => handleNumberPress("6")}
           >
             <Text style={styles.NumText}>6</Text>
           </TouchableOpacity>
@@ -122,19 +127,19 @@ const CustomNumberPad = ({handleNumberPress,handleDeletePress}) => {
         >
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(7)}
+            onPress={() => handleNumberPress("7")}
           >
             <Text style={styles.NumText}>7</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(8)}
+            onPress={() => handleNumberPress("8")}
           >
             <Text style={styles.NumText}>8</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(9)}
+            onPress={() => handleNumberPress("9")}
           >
             <Text style={styles.NumText}>9</Text>
           </TouchableOpacity>
@@ -154,7 +159,7 @@ const CustomNumberPad = ({handleNumberPress,handleDeletePress}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.NumBtn}
-            onPress={() => handleNumberPress(0)}
+            onPress={() => handleNumberPress("0")}
           >
             <Text style={styles.NumText}>0</Text>
           </TouchableOpacity>
@@ -175,10 +180,10 @@ const CustomNumberPad = ({handleNumberPress,handleDeletePress}) => {
   );
 };
 
-const SendMoney = ({ navigation }) => {
+const SendMoney = ({ navigation }: Props) => {
   const [number, setNumber] = useState("10.00");
 
-  const handleNumberPress = (digit) => {
+  const handleNumberPress = (digit: string) => {
     setNumber(number + digit);
   };
 
@@ -204,9 +209,9 @@ const SendMoney = ({ navigation }) => {
       </View>
       <View>
 
-      <SendDetails number={number} style={styles.SendDetailContainer}/>
+      <SendDetails number={number} />
         </View>
-      <CustomNumberPad handleDeletePress={handleDeletePress} handleNumberPress={handleNumberPress} setNumber={setNumber}/>
+      <CustomNumberPad handleDeletePress={handleDeletePress} handleNumberPress={handleNumberPress}/>
     </View>
   );
 };

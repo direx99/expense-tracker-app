@@ -1,6 +1,7 @@
 import {
   StyleSheet,
   Image,
+  type ImageSourcePropType,
   Text,
   TouchableOpacity,
   View,
@@ -8,13 +9,17 @@ import {
   ImageBackground,
   Dimensions
 } from "react-native";
-import React, { useState } from "react";
+import React, { type Dispatch, type SetStateAction, useState } from "react";
 import BlueCard from "../assets/cards/blue.png";
 import PurpleCard from "../assets/cards/purple.png";
 import OrangeCard from "../assets/cards/orange.png";
 import master from "../assets/cards/master.png";
 
-const Card = (props) => {
+type CardProps = { Image: ImageSourcePropType };
+type CardType = "All Cards" | "Debit" | "Credit" | "Virtual";
+type TopButtonProps = { selectedType: CardType; setSelectedType: Dispatch<SetStateAction<CardType>> };
+
+const Card = (props: CardProps) => {
   return (
     <View>
       <View style={styles.Card}>
@@ -58,8 +63,8 @@ const AddCard = () => {
   );
 };
 
-const TopBtn = ({ selectedType, setSelectedType }) => {
-  const handleCardTypePress = (type) => {
+const TopBtn = ({ selectedType, setSelectedType }: TopButtonProps) => {
+  const handleCardTypePress = (type: CardType) => {
     setSelectedType(type);
   };
 
@@ -136,9 +141,8 @@ const TopBtn = ({ selectedType, setSelectedType }) => {
 };
 
 const Wallet = () => {
-  const [selectedType, setSelectedType] = useState("All Cards");
-  const { width, height } = Dimensions.get('window');
-  const cssWidth = `${width}px`;
+  const [selectedType, setSelectedType] = useState<CardType>("All Cards");
+  const { height } = Dimensions.get('window');
   const cssHeight = height-100;
   return (
     <View style={{

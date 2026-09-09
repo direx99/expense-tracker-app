@@ -1,11 +1,11 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, type ImageSourcePropType, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import userimg from "../assets/user.jpg";
 import bell from "../assets/bell.png";
 import send from "../assets/send.png";
 import rec from "../assets/rec.png";
 import menuicon from "../assets/menu.png";
-import food from "../assets/burger.png";
 import a1 from "../assets/avatar/a1.png";
 import a2 from "../assets/avatar/a2.png";
 import a3 from "../assets/avatar/a3.png";
@@ -16,17 +16,21 @@ import phone from "../assets/transactions/phone.png"
 import fashion from "../assets/transactions/fashion.png"
 import pizza from "../assets/transactions/pizza.png"
 import { useNavigation } from "@react-navigation/native";
-import BottomNav from "./BottomNav";
+import type { RootStackParamList } from "../types/navigation";
 
 
 
+
+type TopButtonProps = { imageSource: ImageSourcePropType; name: string };
+type SenderProps = { senderImage: ImageSourcePropType; senderName: string };
+type TransactionProps = { TransactionAmount: string; TransactionDate: string; TransactionIcon: ImageSourcePropType; TransactionTime: string; TransactionTitle: string };
+type Navigation = NativeStackNavigationProp<RootStackParamList>;
 
 const Home = () => {
-  const [balance, setBalance] = useState(0);
-  const [balanceFloat, setBalanceFloat] = useState("70");
-  const [balanceNoFloat, setBalancebalanceNoFloat] = useState("5672");
+  const [balanceFloat] = useState("70");
+  const [balanceNoFloat] = useState("5672");
 
-  const TopBtn = (props)=> {
+  const TopBtn = (props: TopButtonProps)=> {
     return (
       <View style={styles.TopBtn}>
         <View style={styles.IconRound}>
@@ -37,8 +41,8 @@ const Home = () => {
       </View>
     );
   };
-  const Sender = (props)=> {
-    const navigation = useNavigation();
+  const Sender = (props: SenderProps)=> {
+    const navigation = useNavigation<Navigation>();
 
     return (
       <View style={{alignItems:'center',gap:10}}>
@@ -51,7 +55,7 @@ const Home = () => {
       </View>
     );
   };
-  const Transaction = (props)=> {
+  const Transaction = (props: TransactionProps)=> {
     return (
         <View style={{width:'100%'}}>
       <View style={{alignItems:'center',width:'100%',gap:5,flexDirection:'row',justifyContent:'space-between'}}>
@@ -237,7 +241,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
   },
   TopBtn: {
-    Width:110,
+    width:110,
     height: 40,
     backgroundColor: "#F26F2F",
     borderRadius: 30,

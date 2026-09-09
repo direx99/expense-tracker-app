@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, type ImageSourcePropType, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import bell from "../assets/bell.png";
 import apple from "../assets/apple.png";
@@ -7,7 +7,7 @@ import keells from "../assets/keells.png";
 import more from "../assets/Navigation/more.png";
 
 
-const BottomBar = (props) => {
+const BottomBar = () => {
   return (
     <View style={styles.BottomBar}>
       <View style={styles.BottomBarSecondery}></View>
@@ -15,7 +15,7 @@ const BottomBar = (props) => {
   );
 };
 
-const BillsDue = (props) => {
+const BillsDue = () => {
   return (
     <View style={styles.BillsDue}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -58,7 +58,9 @@ const BillsDue = (props) => {
     </View>
   );
 };
-const Bill = (props) => {
+type BillProps = { BillImage: ImageSourcePropType; PayerName: string; PayerType: string };
+
+const Bill = (props: BillProps) => {
   return (
     <View style={styles.Bill}>
       <View style={{ flexDirection: "row", alignItems: "center",justifyContent:'space-between'}}>
@@ -103,9 +105,7 @@ const Bill = (props) => {
   );
 };
 
-const DottedBar = (props) => {
-  const { bottom } = props;
-
+const DottedBar = ({ bottom }: { bottom: number }) => {
   return (
     <View
       style={{
@@ -255,8 +255,9 @@ const GraphCard = () => {
   );
 };
 
-const GraphLine = (props) => {
-  const { earnLineHeight, spendLineHeight, MonthName } = props;
+type GraphLineProps = { earnLineHeight: number; spendLineHeight: number; MonthName: string };
+
+const GraphLine = ({ earnLineHeight, spendLineHeight, MonthName }: GraphLineProps) => {
 
   return (
     <View style={styles.GraphLine}>
@@ -264,7 +265,7 @@ const GraphLine = (props) => {
         <View style={[styles.SpendLine, { height: spendLineHeight }]}></View>
       </View>
 
-      <Text style={styles.MonthName}>{props.MonthName}</Text>
+      <Text style={styles.MonthName}>{MonthName}</Text>
     </View>
   );
 };
@@ -398,7 +399,6 @@ const styles = StyleSheet.create({
   },
   Bill: {
     backgroundColor: "#F6F6F6",
-    boxShadow: 10,
     width: "100%",
     borderRadius: 15,
     padding: 15,
