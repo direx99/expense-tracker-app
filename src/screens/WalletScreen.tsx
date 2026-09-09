@@ -1,7 +1,7 @@
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { useMemo, useState } from "react";
 import type { ComponentProps } from "react";
 
@@ -52,7 +52,7 @@ export default function WalletScreen() {
     <Screen scroll contentStyle={styles.content}>
       <View style={styles.header}><View><Text style={styles.eyebrow}>WALLET</Text><Text style={styles.title}>Your accounts.</Text></View><Pressable accessibilityRole="button" onPress={() => navigation.navigate("AddAccount")} style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}><Feather color={colors.background} name="plus" size={19} strokeWidth={3} /><Text style={styles.addButtonLabel}>Add</Text></Pressable></View>
       <View style={styles.totalPanel}><Text style={styles.totalLabel}>Total balance</Text><Text adjustsFontSizeToFit numberOfLines={1} style={styles.totalValue}>{formatCurrency(totalCents, currencyCode)}</Text><Text style={styles.totalCaption}>{accounts.length === 1 ? "1 account saved" : `${accounts.length} accounts saved`}</Text></View>
-      <ScrollView contentContainerStyle={styles.filterList} horizontal showsHorizontalScrollIndicator={false}>{filters.map((item) => <Pressable accessibilityRole="tab" accessibilityState={{ selected: filter === item.value }} key={item.value} onPress={() => setFilter(item.value)} style={[styles.filter, filter === item.value && styles.activeFilter]}><Text style={[styles.filterLabel, filter === item.value && styles.activeFilterLabel]}>{item.label}</Text></Pressable>)}</ScrollView>
+      <View accessibilityRole="tablist" style={styles.filterGrid}>{filters.map((item) => <Pressable accessibilityRole="tab" accessibilityState={{ selected: filter === item.value }} key={item.value} onPress={() => setFilter(item.value)} style={[styles.filter, item.value === "all" && styles.allFilter, filter === item.value && styles.activeFilter]}><Text numberOfLines={2} style={[styles.filterLabel, filter === item.value && styles.activeFilterLabel]}>{item.label}</Text></Pressable>)}</View>
       {displayedAccounts.length === 0 ? <View style={styles.emptyPanel}><Feather color={colors.accent} name="plus-circle" size={26} /><Text style={styles.emptyTitle}>{filter === "all" ? "Add your first account" : "No accounts in this group"}</Text><Text style={styles.emptyBody}>{filter === "all" ? "Keep bank accounts, credit cards, gift cards, and savings wallets together." : "Choose another type or add a new account."}</Text><Pressable onPress={() => navigation.navigate("AddAccount")} style={styles.emptyAction}><Text style={styles.emptyActionLabel}>Add account</Text></Pressable></View> : <View style={styles.accountList}>{displayedAccounts.map((account) => <AccountRow account={account} currencyCode={currencyCode} key={account.id} onRemove={() => confirmRemove(account)} />)}</View>}
     </Screen>
   );
@@ -74,10 +74,11 @@ const styles = StyleSheet.create({
   totalLabel: { color: colors.mutedText, fontSize: 14, fontWeight: "600" },
   totalValue: { color: colors.text, fontSize: 40, fontVariant: ["tabular-nums"], fontWeight: "800", marginTop: space.sm },
   totalCaption: { color: colors.accent, fontSize: 13, fontWeight: "700", marginTop: space.md },
-  filterList: { gap: space.sm, paddingVertical: space.xl },
-  filter: { backgroundColor: colors.elevatedSurface, borderColor: colors.border, borderRadius: radius.pill, borderWidth: 1, justifyContent: "center", minHeight: 40, paddingHorizontal: space.md },
+  filterGrid: { flexDirection: "row", flexWrap: "wrap", gap: space.sm, marginBottom: space.xl, marginTop: space.xl },
+  filter: { alignItems: "center", backgroundColor: colors.elevatedSurface, borderColor: colors.border, borderRadius: radius.md, borderWidth: 1, flexBasis: "47%", flexGrow: 1, justifyContent: "center", minHeight: 52, paddingHorizontal: space.sm, paddingVertical: space.xs },
+  allFilter: { flexBasis: "100%" },
   activeFilter: { backgroundColor: colors.accent, borderColor: colors.accent },
-  filterLabel: { color: colors.mutedText, fontSize: 13, fontWeight: "700" },
+  filterLabel: { color: colors.mutedText, fontSize: 13, fontWeight: "700", textAlign: "center" },
   activeFilterLabel: { color: colors.background },
   emptyPanel: { alignItems: "flex-start", backgroundColor: colors.surface, borderColor: colors.border, borderRadius: radius.md, borderStyle: "dashed", borderWidth: 1, padding: space.xl },
   emptyTitle: { color: colors.text, fontSize: 18, fontWeight: "800", marginTop: space.md },
