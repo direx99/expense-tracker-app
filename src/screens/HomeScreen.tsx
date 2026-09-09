@@ -1,387 +1,102 @@
-import { Image, type ImageSourcePropType, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import userimg from "../../assets/user.jpg";
-import bell from "../../assets/bell.png";
-import send from "../../assets/send.png";
-import rec from "../../assets/rec.png";
-import menuicon from "../../assets/menu.png";
-import a1 from "../../assets/avatar/a1.png";
-import a2 from "../../assets/avatar/a2.png";
-import a3 from "../../assets/avatar/a3.png";
-import a4 from "../../assets/avatar/a4.png";
-import a5 from "../../assets/avatar/a5.png";
-import grocery from "../../assets/transactions/grocery.png"
-import phone from "../../assets/transactions/phone.png"
-import fashion from "../../assets/transactions/fashion.png"
-import pizza from "../../assets/transactions/pizza.png"
 import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useMemo } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+
+import { formatCurrency, formatTransactionDate } from "../features/finance/formatters";
+import { useAppSelector } from "../store/hooks";
+import { colors } from "../theme/colors";
 import type { RootStackParamList } from "../types/navigation";
 
+type Navigation = NativeStackNavigationProp<RootStackParamList, "Home">;
 
-
-
-type TopButtonProps = { imageSource: ImageSourcePropType; name: string };
-type SenderProps = { senderImage: ImageSourcePropType; senderName: string };
-type TransactionProps = { TransactionAmount: string; TransactionDate: string; TransactionIcon: ImageSourcePropType; TransactionTime: string; TransactionTitle: string };
-type Navigation = NativeStackNavigationProp<RootStackParamList>;
-
-const Home = () => {
-  const [balanceFloat] = useState("70");
-  const [balanceNoFloat] = useState("5672");
-
-  const TopBtn = (props: TopButtonProps)=> {
-    return (
-      <View style={styles.TopBtn}>
-        <View style={styles.IconRound}>
-        <Image style={styles.SendImg} source={props.imageSource} />
-
-        </View>
-        <Text style={styles.SendTitle}>{props.name}</Text>
-      </View>
-    );
-  };
-  const Sender = (props: SenderProps)=> {
-    const navigation = useNavigation<Navigation>();
-
-    return (
-      <View style={{alignItems:'center',gap:10}}>
-        <TouchableOpacity onPress={()=>navigation.navigate('Send')} style={{alignItems:'center',gap:5}}>
-        <Image style={styles.SenderImg} source={props.senderImage} />
-              
-
-        <Text style={styles.SenderName}>{props.senderName}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-  const Transaction = (props: TransactionProps)=> {
-    return (
-        <View style={{width:'100%'}}>
-      <View style={{alignItems:'center',width:'100%',gap:5,flexDirection:'row',justifyContent:'space-between'}}>
-       
-        <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
-            <View style={styles.TransactionIconContainer}>
-        <Image style={styles.TransactionIcon} source={props.TransactionIcon} />
-        </View>
-
-        <View>
-        <Text style={styles.TransactionTitle}>{props.TransactionTitle}</Text>
-        <View style={{flexDirection:'row', gap:5}}>
-        <Text style={styles.TransactionDate}>{props.TransactionDate}</Text>
-        <Text style={styles.TransactionTime}>• {props.TransactionTime}</Text>
-
-        </View>
-        
-        </View>
-        </View>
-        <View style={{flexDirection:'row'}}>
-          <Text style={[styles.TransactionAmount,{color:'#F26F2E'}]}>$</Text>
-        <Text style={styles.TransactionAmount}>{props.TransactionAmount}</Text>
-
-        </View>
-      </View>
-      <View style={styles.TransactionLine}></View>
-        </View>
-    );
-  };
+export default function HomeScreen() {
+  const navigation = useNavigation<Navigation>();
+  const currencyCode = useAppSelector((state) => state.preferences.currencyCode);
+  const transactions = useAppSelector((state) => state.finance.transactions);
+  const totalSpentCents = useMemo(
+    () => transactions.reduce((total, transaction) => total + transaction.amountCents, 0),
+    [transactions],
+  );
+  const recipients = useMemo(
+    () => [...new Set(transactions.map((transaction) => transaction.recipientName))].slice(0, 5),
+    [transactions],
+  );
 
   return (
-    <View style={styles.home}>
-                
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.greeting}>Expense tracker</Text>
+          <Text style={styles.title}>Overview</Text>
+        </View>
+        <Pressable style={styles.sendButton} onPress={() => navigation.navigate("Send")}>
+          <Text style={styles.sendButtonText}>Send money</Text>
+        </Pressable>
+      </View>
 
-      <View style={styles.TopBar}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Image style={styles.UserImg} source={userimg} />
-          <View>
-            <Text style={styles.GreetMsg}>Good Morning</Text>
-            <Text style={styles.UserName}>Dinith Perera</Text>
+      <View style={styles.summaryCard}>
+        <Text style={styles.summaryLabel}>Total spent</Text>
+        <Text style={styles.summaryValue}>{formatCurrency(totalSpentCents, currencyCode)}</Text>
+        <Text style={styles.summaryCaption}>{transactions.length} saved transactions</Text>
+      </View>
+
+      <Text style={styles.sectionTitle}>Recent recipients</Text>
+      {recipients.length === 0 ? (
+        <Text style={styles.emptyText}>Recipients appear here after your first transfer.</Text>
+      ) : (
+        <View style={styles.recipientList}>
+          {recipients.map((recipient) => (
+            <View key={recipient} style={styles.recipientChip}>
+              <Text style={styles.recipientText}>{recipient}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+
+      <View style={styles.transactionsHeader}>
+        <Text style={styles.sectionTitle}>Recent transactions</Text>
+        <Text style={styles.count}>{transactions.length}</Text>
+      </View>
+      {transactions.length === 0 ? (
+        <Text style={styles.emptyText}>No saved transactions yet.</Text>
+      ) : (
+        transactions.map((transaction) => (
+          <View key={transaction.id} style={styles.transaction}>
+            <View>
+              <Text style={styles.transactionRecipient}>{transaction.recipientName}</Text>
+              <Text style={styles.transactionDate}>{formatTransactionDate(transaction.createdAt)}</Text>
+            </View>
+            <Text style={styles.transactionAmount}>
+              −{formatCurrency(transaction.amountCents, currencyCode)}
+            </Text>
           </View>
-        </View>
-        <View style={styles.BellContiner}>
-          <Image style={styles.BellImg} source={bell} />
-        </View>
-      </View>
-      <View style={styles.BalanceView}>
-        <Text style={styles.BalanceTitle}>Your Balance</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.Balance}>${balanceNoFloat}.</Text>
-          <Text style={[styles.Balance, { color: "#6E6E6E" }]}>
-            {balanceFloat}
-          </Text>
-        </View>
-      </View>
-      <View style = {{flexDirection:'row', gap:10}}>
-      <TopBtn name={"Send"} imageSource={send}/>
-      <TopBtn name={"Recieve"} imageSource={rec}/>
-      <View style={styles.MenuContainer}>
-      <Image style={styles.SendImg} source={menuicon} />
-
-      </View>
-      </View>
-      <View style={styles.QuickSend}>
-        <Text style={styles.QuickSendTitle}> 
-            Quick Send
-        </Text>
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-        <Sender senderName ="Dinith" senderImage={a1}/>
-        <Sender senderName ="Salman"  senderImage={a2}/>
-        <Sender senderName ="Amashi" senderImage={a3}/>
-        <Sender senderName ="Imesh" senderImage={a4}/>
-        <Sender senderName ="Ahnaf"senderImage={a5}/>
-
-       
-        
-        </View>
-      </View>
-      <ScrollView contentContainerStyle={styles.transcontainer}       scrollEnabled={false}>
-      <View style={styles.content}>
-      <View style={styles.RecentTransaction}>
-        <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'flex-end'}}>
-      <Text style={styles.RecentTransactionTitle} >
-        Recent Transactions
-      </Text>
-      <Text style={styles.SeeAll} >
-        See all
-      </Text>
-      </View>
-      <View style={styles.TransactionCol}>
-      <Transaction TransactionTitle ="Keells Super" 
-      TransactionDate='Tue,25 May'
-      TransactionTime='4:40 PM'
-      TransactionIcon={grocery}
-      TransactionAmount="120.20"/>
-       <Transaction TransactionTitle ="The Mobiway" 
-      TransactionDate='Mon,18 May'
-      TransactionTime='12:10 PM'
-      TransactionIcon={phone}
-      TransactionAmount="76.20"/> 
-      <Transaction TransactionTitle ="ODEL" 
-      TransactionDate='Wed,12 May'
-      TransactionTime='2:49 AM'
-      TransactionIcon={fashion}
-      TransactionAmount="180.90"/> 
-      <Transaction TransactionTitle ="Pizza Hut" 
-      TransactionDate='Sun,5 January'
-      TransactionIcon={pizza}
-      TransactionTime='1:19 AM'
-      TransactionAmount="13.00"/>
-      
-      </View>
-
-      </View>
-
-<View >
-      
-      </View>
-      </View>
-    </ScrollView>   
-
-
-
-    </View>
+        ))
+      )}
+    </ScrollView>
   );
-};
-
-export default Home;
+}
 
 const styles = StyleSheet.create({
-  home: {
-    flex: 1,
-    backgroundColor: "#111111",
-    width: "100%",
-    height: "100%",
-    paddingTop: 50,
-
-  },
-  TopBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  UserImg: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-    marginRight: 10,
-  },
-  GreetMsg: {
-    color: "#767675",
-    fontSize: 12,
-  },
-  UserName: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: 500,
-  },
-  BellImg: {
-    width: 24,
-    height: 24,
-  },
-  BellContiner: {
-    width: 40,
-    height: 40,
-    backgroundColor: "#3C3C3C",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 30,
-  },
-  BalanceView: {
-    marginVertical: 20,
-    marginTop:40,
-  },
-  BalanceTitle: {
-    color: "#767675",
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  Balance: {
-    color: "#fff",
-    fontSize: 46,
-    fontWeight: 500,
-  },
-  TopBtn: {
-    width:110,
-    height: 40,
-    backgroundColor: "#F26F2F",
-    borderRadius: 30,
-    alignItems:'center',
-    paddingHorizontal:4,
-    flexDirection:'row',
-    
-  },
-  IconRound:{
-    backgroundColor:'#EC8B6A',
-    width: 32,
-    height: 32,
-    borderRadius: 30,
-    justifyContent:'center',
-    alignItems:'center'
-
-  },
-    SendImg:{
-        width: 20,
-    height: 20,
-    },
-    SendTitle:{
-        color:'#fff',
-        fontSize:16,
-        fontWeight:600,
-       marginHorizontal:20
-
-    },
-    MenuContainer:{
-        width: 39,
-    height: 39,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#5D5D5D',
-    borderRadius:30,
-    borderWidth:1,
-    borderColor:'#fff'
-    },
-    QuickSend:{
-        width:'100%',
-        height:160,
-        backgroundColor:'#292929',
-        borderTopStartRadius:20,
-        borderTopEndRadius:20,
-        marginTop:20,
-        paddingTop:20,
-        paddingHorizontal:15,
-        marginBottom:-20
-
-    },
-    QuickSendTitle:{
-        fontSize:15,
-        fontWeight:500,
-        color:'#fff',
-        opacity:0.8,
-        marginBottom:15
-    },
-    SenderImg:{
-        width:45,
-        height:45,
-        borderRadius:40
-    },
-    SenderName:{
-        fontSize:12,
-        fontWeight:500,
-        color:'#fff',
-        opacity:0.8,
-        marginBottom:15
-    },
-    RecentTransaction:{
-        width:'100%',
-        height:'100%',
-        justifyContent:'flex-start'
-    },
-
-
-    transcontainer: {
-        flexGrow: 1,
-        borderTopStartRadius:20,
-        borderTopEndRadius:20,
-        backgroundColor: '#fff',
-        borderBottomLeftRadius: 40,
-        borderBottomRightRadius: 40,
-        justifyContent: 'flex-start',
-      },
-      content: {
-        flexDirection: 'column',
-        paddingTop: 20,
-        paddingHorizontal: 15,
-      },
-      RecentTransactionTitle:{
-        fontSize:15,
-        fontWeight:600,
-        color:'#707070',
-      },
-      SeeAll:{
-        fontSize:13,
-        color:'#707070'
-      },
-      TransactionCol:{
-        alignItems:'flex-start',
-        paddingTop:30,
-        gap:10,
-
-      },
-      TransactionTitle:{
-        fontSize:16,
-        fontWeight:600
-      },
-        TransactionDate:{
-            fontSize:11,
-            color:'#707070'
-
-        },
-        TransactionTime:{
-            fontSize:11,
-            color:'#707070'
-
-        },
-        TransactionAmount:{
-            fontSize:18,
-            fontWeight:600
-        },
-        TransactionLine:{
-            width:'100%',
-            backgroundColor:'#707070',
-            height:1,
-            marginTop:10,
-            opacity:0.1
-        },
-        TransactionIconContainer:{
-            width:40,
-            height:40,
-            backgroundColor:'#D0D1CF',
-      borderRadius:40,
-            justifyContent:'center',
-            alignItems:'center'
-        },
-        TransactionIcon:{
-            width:20,
-            height:20,
-        }
-    });
+  container: { flexGrow: 1, backgroundColor: colors.background, paddingTop: 32, paddingBottom: 96 },
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  greeting: { color: colors.mutedText, fontSize: 14 },
+  title: { color: colors.text, fontSize: 28, fontWeight: "700", marginTop: 4 },
+  sendButton: { backgroundColor: colors.accent, borderRadius: 24, paddingHorizontal: 14, paddingVertical: 10 },
+  sendButtonText: { color: colors.text, fontWeight: "700" },
+  summaryCard: { backgroundColor: colors.surface, borderRadius: 20, marginTop: 28, padding: 20 },
+  summaryLabel: { color: colors.mutedText, fontSize: 14 },
+  summaryValue: { color: colors.text, fontSize: 34, fontWeight: "700", marginTop: 6 },
+  summaryCaption: { color: colors.mutedText, marginTop: 8 },
+  sectionTitle: { color: colors.text, fontSize: 17, fontWeight: "700", marginTop: 28 },
+  emptyText: { color: colors.mutedText, lineHeight: 20, marginTop: 10 },
+  recipientList: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 12 },
+  recipientChip: { backgroundColor: colors.surface, borderRadius: 18, paddingHorizontal: 12, paddingVertical: 8 },
+  recipientText: { color: colors.text },
+  transactionsHeader: { alignItems: "center", flexDirection: "row", justifyContent: "space-between" },
+  count: { color: colors.mutedText, marginTop: 28 },
+  transaction: { alignItems: "center", borderBottomColor: "#303030", borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: "row", justifyContent: "space-between", paddingVertical: 16 },
+  transactionRecipient: { color: colors.text, fontSize: 16, fontWeight: "600" },
+  transactionDate: { color: colors.mutedText, marginTop: 4 },
+  transactionAmount: { color: colors.accent, fontSize: 16, fontWeight: "700" },
+});

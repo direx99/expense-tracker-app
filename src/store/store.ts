@@ -12,8 +12,10 @@ import {
 } from "redux-persist";
 
 import preferencesReducer from "../features/preferences/preferencesSlice";
+import financeReducer from "../features/finance/financeSlice";
 
 const rootReducer = combineReducers({
+  finance: financeReducer,
   preferences: preferencesReducer,
 });
 
@@ -21,7 +23,7 @@ const persistedReducer = persistReducer(
   {
     key: "expense-tracker",
     storage: AsyncStorage,
-    whitelist: ["preferences"],
+    whitelist: ["finance", "preferences"],
   },
   rootReducer,
 );
