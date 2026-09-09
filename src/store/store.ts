@@ -13,8 +13,10 @@ import {
 
 import preferencesReducer from "../features/preferences/preferencesSlice";
 import financeReducer from "../features/finance/financeSlice";
+import authReducer from "../features/auth/authSlice";
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   finance: financeReducer,
   preferences: preferencesReducer,
 });
@@ -23,7 +25,7 @@ const persistedReducer = persistReducer(
   {
     key: "expense-tracker",
     storage: AsyncStorage,
-    whitelist: ["finance", "preferences"],
+    whitelist: ["auth", "finance", "preferences"],
   },
   rootReducer,
 );
