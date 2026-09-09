@@ -40,10 +40,11 @@ const financeSlice = createSlice({
       );
     },
     addWalletAccount(state, action: PayloadAction<WalletAccount>) {
+      state.walletAccounts ??= [];
       state.walletAccounts.unshift(action.payload);
     },
     removeWalletAccount(state, action: PayloadAction<string>) {
-      state.walletAccounts = state.walletAccounts.filter(
+      state.walletAccounts = (state.walletAccounts ?? []).filter(
         (account) => account.id !== action.payload,
       );
     },

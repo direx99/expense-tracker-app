@@ -36,7 +36,7 @@ export default function WalletScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<Navigation>();
   const currencyCode = useAppSelector((state) => state.preferences.currencyCode);
-  const accounts = useAppSelector((state) => state.finance.walletAccounts);
+  const accounts = useAppSelector((state) => state.finance.walletAccounts ?? []);
   const [filter, setFilter] = useState<Filter>("all");
   const displayedAccounts = useMemo(() => filter === "all" ? accounts : accounts.filter((account) => account.accountType === filter), [accounts, filter]);
   const totalCents = useMemo(() => accounts.reduce((total, account) => total + account.balanceCents, 0), [accounts]);
