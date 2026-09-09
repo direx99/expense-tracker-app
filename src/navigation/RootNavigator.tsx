@@ -6,6 +6,7 @@ import { StyleSheet, View } from "react-native";
 import BottomNav from "../components/navigation/BottomNav";
 import { useAppSelector } from "../store/hooks";
 import AnalyticsScreen from "../screens/AnalyticsScreen";
+import AddAccountScreen from "../screens/AddAccountScreen";
 import HomeScreen from "../screens/HomeScreen";
 import MoreScreen from "../screens/MoreScreen";
 import SendMoneyScreen from "../screens/SendMoneyScreen";
@@ -21,7 +22,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 function BottomNavigation({ activeRoute }: { activeRoute: keyof RootStackParamList }) {
-  return activeRoute === "Send" ? null : <View style={styles.bottomNavigation}><BottomNav activeRoute={activeRoute} navigation={navigationRef} /></View>;
+  return activeRoute === "Send" || activeRoute === "AddAccount" ? null : <View style={styles.bottomNavigation}><BottomNav activeRoute={activeRoute} navigation={navigationRef} /></View>;
 }
 
 function AppNavigator({ activeRoute }: { activeRoute: keyof RootStackParamList }) {
@@ -32,6 +33,7 @@ function AppNavigator({ activeRoute }: { activeRoute: keyof RootStackParamList }
         <Stack.Screen name="Statistic" component={AnalyticsScreen} />
         <Stack.Screen name="More" component={MoreScreen} />
         <Stack.Screen name="Wallet" component={WalletScreen} />
+        <Stack.Screen name="AddAccount" component={AddAccountScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="Send" component={SendMoneyScreen} />
       </Stack.Navigator>

@@ -7,12 +7,24 @@ export type Transaction = {
   recipientName: string;
 };
 
+export type WalletAccountType = "bank" | "credit" | "gift" | "savings";
+
+export type WalletAccount = {
+  accountType: WalletAccountType;
+  balanceCents: number;
+  createdAt: string;
+  id: string;
+  name: string;
+};
+
 export type FinanceState = {
   transactions: Transaction[];
+  walletAccounts: WalletAccount[];
 };
 
 const initialState: FinanceState = {
   transactions: [],
+  walletAccounts: [],
 };
 
 const financeSlice = createSlice({
@@ -27,8 +39,16 @@ const financeSlice = createSlice({
         (transaction) => transaction.id !== action.payload,
       );
     },
+    addWalletAccount(state, action: PayloadAction<WalletAccount>) {
+      state.walletAccounts.unshift(action.payload);
+    },
+    removeWalletAccount(state, action: PayloadAction<string>) {
+      state.walletAccounts = state.walletAccounts.filter(
+        (account) => account.id !== action.payload,
+      );
+    },
   },
 });
 
-export const { addExpense, removeTransaction } = financeSlice.actions;
+export const { addExpense, addWalletAccount, removeTransaction, removeWalletAccount } = financeSlice.actions;
 export default financeSlice.reducer;
