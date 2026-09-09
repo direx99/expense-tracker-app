@@ -44,5 +44,5 @@ export default function RootNavigator() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background, padding: 20 },
-  bottomNavigation: { position: "absolute", bottom: -10, left: 10, right: 10 },
+  bottomNavigation: { bottom: 0, left: 0, position: "absolute", right: 0 },
 });
