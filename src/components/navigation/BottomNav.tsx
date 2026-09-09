@@ -1,5 +1,4 @@
-import { useNavigation, useNavigationState } from "@react-navigation/native";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { NavigationContainerRef } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -12,8 +11,12 @@ import { colors } from "../../theme/colors";
 import { radius } from "../../theme/tokens";
 import type { RootStackParamList } from "../../types/navigation";
 
-type Navigation = NativeStackNavigationProp<RootStackParamList>;
 type NavItem = { icon: number; label: string; route: keyof RootStackParamList };
+
+type BottomNavProps = {
+  activeRoute: keyof RootStackParamList;
+  navigation: NavigationContainerRef<RootStackParamList>;
+};
 
 const items: NavItem[] = [
   { icon: home, label: "Home", route: "Home" },
@@ -23,9 +26,7 @@ const items: NavItem[] = [
   { icon: more, label: "More", route: "More" },
 ];
 
-export default function BottomNav() {
-  const navigation = useNavigation<Navigation>();
-  const activeRoute = useNavigationState((state) => state.routes[state.index]?.name);
+export default function BottomNav({ activeRoute, navigation }: BottomNavProps) {
   const { bottom } = useSafeAreaInsets();
 
   return (

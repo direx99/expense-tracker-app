@@ -1,5 +1,6 @@
-import { NavigationContainer, useNavigationState } from "@react-navigation/native";
+import { createNavigationContainerRef, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import BottomNav from "../components/navigation/BottomNav";
@@ -17,13 +18,13 @@ import { colors } from "../theme/colors";
 import type { RootStackParamList } from "../types/navigation";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
-function BottomNavigation() {
-  const routeName = useNavigationState((state) => state.routes[state.index]?.name);
-  return routeName === "Send" ? null : <View style={styles.bottomNavigation}><BottomNav /></View>;
+function BottomNavigation({ activeRoute }: { activeRoute: keyof RootStackParamList }) {
+  return activeRoute === "Send" ? null : <View style={styles.bottomNavigation}><BottomNav activeRoute={activeRoute} navigation={navigationRef} /></View>;
 }
 
-function AppNavigator() {
+function AppNavigator({ activeRoute }: { activeRoute: keyof RootStackParamList }) {
   return (
     <View style={styles.container}>
       <Stack.Navigator screenOptions={{ animation: "fade", headerShown: false }}>
@@ -34,7 +35,7 @@ function AppNavigator() {
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="Send" component={SendMoneyScreen} />
       </Stack.Navigator>
-      <BottomNavigation />
+      <BottomNavigation activeRoute={activeRoute} />
     </View>
   );
 }
@@ -42,10 +43,17 @@ function AppNavigator() {
 export default function RootNavigator() {
   const hasCompletedOnboarding = useAppSelector((state) => state.auth.hasCompletedOnboarding);
   const user = useAppSelector((state) => state.auth.user);
+  const [activeRoute, setActiveRoute] = useState<keyof RootStackParamList>("Home");
+  const syncActiveRoute = () => {
+    const routeName = navigationRef.getCurrentRoute()?.name;
+    if (routeName) {
+      setActiveRoute(routeName);
+    }
+  };
 
   return (
-    <NavigationContainer>
-      {!hasCompletedOnboarding ? <Stack.Navigator screenOptions={{ headerShown: false }}><Stack.Screen name="Welcome" component={WelcomeScreen} /></Stack.Navigator> : !user ? <Stack.Navigator screenOptions={{ animation: "fade", headerShown: false }}><Stack.Screen name="SignIn" component={SignInScreen} /><Stack.Screen name="SignUp" component={SignUpScreen} /></Stack.Navigator> : <AppNavigator />}
+    <NavigationContainer onReady={syncActiveRoute} onStateChange={syncActiveRoute} ref={navigationRef}>
+      {!hasCompletedOnboarding ? <Stack.Navigator screenOptions={{ headerShown: false }}><Stack.Screen name="Welcome" component={WelcomeScreen} /></Stack.Navigator> : !user ? <Stack.Navigator screenOptions={{ animation: "fade", headerShown: false }}><Stack.Screen name="SignIn" component={SignInScreen} /><Stack.Screen name="SignUp" component={SignUpScreen} /></Stack.Navigator> : <AppNavigator activeRoute={activeRoute} />}
     </NavigationContainer>
   );
 }
