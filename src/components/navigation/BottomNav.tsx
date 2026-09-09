@@ -3,12 +3,12 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import card from "../assets/card.png";
-import home from "../assets/home.png";
-import more from "../assets/more.png";
-import settings from "../assets/setting.png";
-import statistic from "../assets/statistic.png";
-import type { RootStackParamList } from "../types/navigation";
+import card from "../../../assets/card.png";
+import home from "../../../assets/home.png";
+import more from "../../../assets/more.png";
+import settings from "../../../assets/setting.png";
+import statistic from "../../../assets/statistic.png";
+import type { RootStackParamList } from "../../types/navigation";
 
 type IconName = "home" | "statistic" | "more" | "card" | "settings";
 type Navigation = NativeStackNavigationProp<RootStackParamList>;

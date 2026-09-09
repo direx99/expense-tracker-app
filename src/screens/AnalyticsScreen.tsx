@@ -1,10 +1,10 @@
 import { Image, type ImageSourcePropType, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import bell from "../assets/bell.png";
-import apple from "../assets/apple.png";
-import pizza from "../assets/pizzaa.png";
-import keells from "../assets/keells.png";
-import more from "../assets/Navigation/more.png";
+import bell from "../../assets/bell.png";
+import apple from "../../assets/apple.png";
+import pizza from "../../assets/pizzaa.png";
+import keells from "../../assets/keells.png";
+import more from "../../assets/Navigation/more.png";
 
 
 const BottomBar = () => {

@@ -1,20 +1,20 @@
 import { Image, type ImageSourcePropType, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import userimg from "../assets/user.jpg";
-import bell from "../assets/bell.png";
-import send from "../assets/send.png";
-import rec from "../assets/rec.png";
-import menuicon from "../assets/menu.png";
-import a1 from "../assets/avatar/a1.png";
-import a2 from "../assets/avatar/a2.png";
-import a3 from "../assets/avatar/a3.png";
-import a4 from "../assets/avatar/a4.png";
-import a5 from "../assets/avatar/a5.png";
-import grocery from "../assets/transactions/grocery.png"
-import phone from "../assets/transactions/phone.png"
-import fashion from "../assets/transactions/fashion.png"
-import pizza from "../assets/transactions/pizza.png"
+import userimg from "../../assets/user.jpg";
+import bell from "../../assets/bell.png";
+import send from "../../assets/send.png";
+import rec from "../../assets/rec.png";
+import menuicon from "../../assets/menu.png";
+import a1 from "../../assets/avatar/a1.png";
+import a2 from "../../assets/avatar/a2.png";
+import a3 from "../../assets/avatar/a3.png";
+import a4 from "../../assets/avatar/a4.png";
+import a5 from "../../assets/avatar/a5.png";
+import grocery from "../../assets/transactions/grocery.png"
+import phone from "../../assets/transactions/phone.png"
+import fashion from "../../assets/transactions/fashion.png"
+import pizza from "../../assets/transactions/pizza.png"
 import { useNavigation } from "@react-navigation/native";
 import type { RootStackParamList } from "../types/navigation";
 

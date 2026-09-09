@@ -10,10 +10,10 @@ import {
   Dimensions
 } from "react-native";
 import React, { type Dispatch, type SetStateAction, useState } from "react";
-import BlueCard from "../assets/cards/blue.png";
-import PurpleCard from "../assets/cards/purple.png";
-import OrangeCard from "../assets/cards/orange.png";
-import master from "../assets/cards/master.png";
+import BlueCard from "../../assets/cards/blue.png";
+import PurpleCard from "../../assets/cards/purple.png";
+import OrangeCard from "../../assets/cards/orange.png";
+import master from "../../assets/cards/master.png";
 
 type CardProps = { Image: ImageSourcePropType };
 type CardType = "All Cards" | "Debit" | "Credit" | "Virtual";

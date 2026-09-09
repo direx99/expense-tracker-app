@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import more from "../assets/Navigation/more.png";
-import back from "../assets/Navigation/back.png";
-import next from "../assets/Navigation/next.png";
-import del from "../assets/Navigation/del.png";
-import user from "../assets/avatar/a1.png";
+import more from "../../assets/Navigation/more.png";
+import back from "../../assets/Navigation/back.png";
+import next from "../../assets/Navigation/next.png";
+import del from "../../assets/Navigation/del.png";
+import user from "../../assets/avatar/a1.png";
 import type { RootStackParamList } from "../types/navigation";
 
 
