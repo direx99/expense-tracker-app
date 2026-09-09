@@ -8,6 +8,7 @@ import type { ComponentProps } from "react";
 import Screen from "../components/layout/Screen";
 import { formatCurrency } from "../features/finance/formatters";
 import { removeWalletAccount, type WalletAccount, type WalletAccountType } from "../features/finance/financeSlice";
+import type { CurrencyCode } from "../features/preferences/preferencesSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { colors } from "../theme/colors";
 import { radius, space } from "../theme/tokens";
@@ -57,7 +58,7 @@ export default function WalletScreen() {
   );
 }
 
-function AccountRow({ account, currencyCode, onRemove }: { account: WalletAccount; currencyCode: string; onRemove: () => void }) {
+function AccountRow({ account, currencyCode, onRemove }: { account: WalletAccount; currencyCode: CurrencyCode; onRemove: () => void }) {
   const meta = accountMeta[account.accountType];
   return <View style={styles.accountRow}><View style={styles.accountIcon}><Feather color={colors.accent} name={meta.icon} size={20} /></View><View style={styles.accountCopy}><Text numberOfLines={1} style={styles.accountName}>{account.name}</Text><Text style={styles.accountType}>{meta.label}</Text></View><View style={styles.accountEnd}><Text adjustsFontSizeToFit numberOfLines={1} style={styles.accountBalance}>{formatCurrency(account.balanceCents, currencyCode)}</Text><Pressable accessibilityLabel={`Remove ${account.name}`} accessibilityRole="button" hitSlop={8} onPress={onRemove} style={({ pressed }) => [styles.removeButton, pressed && styles.pressed]}><Feather color={colors.cardMutedText} name="trash-2" size={16} /></Pressable></View></View>;
 }

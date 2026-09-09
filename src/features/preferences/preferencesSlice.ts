@@ -1,18 +1,27 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export type PreferencesState = {
-  currencyCode: string;
+  currencyCode: CurrencyCode;
 };
 
+export type CurrencyCode = "LKR" | "USD" | "EUR" | "GBP";
+
+export const currencyOptions: { code: CurrencyCode; label: string }[] = [
+  { code: "LKR", label: "Rs (LKR)" },
+  { code: "USD", label: "US Dollar" },
+  { code: "EUR", label: "Euro" },
+  { code: "GBP", label: "Pound" },
+];
+
 const initialState: PreferencesState = {
-  currencyCode: "USD",
+  currencyCode: "LKR",
 };
 
 const preferencesSlice = createSlice({
   name: "preferences",
   initialState,
   reducers: {
-    setCurrencyCode(state, action: PayloadAction<string>) {
+    setCurrencyCode(state, action: PayloadAction<CurrencyCode>) {
       state.currencyCode = action.payload;
     },
   },
